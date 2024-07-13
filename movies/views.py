@@ -1,12 +1,18 @@
-# En el archivo views.py de la aplicación movies
+from django.http import HttpResponse
+from django.template import loader
+from .models import Movies
 
-from django.shortcuts import render, get_object_or_404
-from .models import Movie
+def index(request):
+    #pokemons = Pokemon.objects.all() ## SELECT * FROM pokedex_pokemon
+    movies = Movies.objects.order_by('type') ## SELECT * FROM pokedex_pokemon ORD
+    template = loader.get_template('index.html')
+    return HttpResponse(template.render({'movies': movies}, request))
 
-def movie_list(request):
-    movies = Movie.objects.all()
-    return render(request, 'movies/index.html', {'movies': movies})
-
-def movie_detail(request, pk):
-    movie = get_object_or_404(Movie, pk=pk)
-    return render(request, 'movies/movie_detail.html', {'movie': movie})
+def movies(request, movies_id):
+    #SELECT * FROM pokedex_pokemon WHERE id='pokemon_id'
+    movies = Movies.objects.get(id=movies_id)
+    template = loader.get_template('display_movies.html')
+    context = {
+        'movies': movies
+    }
+    return HttpResponse(template.render(context, request))
