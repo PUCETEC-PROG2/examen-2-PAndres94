@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Lista de Películas{% endblock %}
+{% block content %}
+    <div class="container">
+        <h2 class="py-4"><strong>Lista de Películas</strong></h2>
+        <div class="row">
+            {% for movie in movies %}
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <p class="card-text"><strong>Año de publicación:</strong> {{ movie.publication_year }}</p>
+                            <p class="card-text"><strong>Director:</strong> {{ movie.movie_director }}</p>
+                            <p class="card-text"><strong>Género:</strong> {{ movie.genre }}</p>
+                            <!-- Puedes añadir más detalles según sea necesario -->
+                            <a href="{% url 'movie_detail' movie.id %}" class="btn btn-primary">Ver detalles</a>
+                        </div>
+                  
